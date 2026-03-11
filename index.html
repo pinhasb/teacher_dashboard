@@ -129,7 +129,7 @@ canvas{
 <div class="card">
 <h3>🚗 מצב חניה בקניון</h3>
 <div class="big" id="parkingStatus">🟡</div>
-<div class="status" id="parkingText">נשאר רק קומה 7 ליד המזגנים (מורות)</div>
+<div class="status" id="parkingText">נשאר רק קומה 7 ליד המזגנים (מורות - מגיעות מוקדם)</div>
 </div>
 
 <div class="card">
@@ -221,9 +221,9 @@ const stressReasons = [
 
 // --- חניה עם קבוצות + אנימציה חלקה ---
 const parkingStates = [
-  {emoji:"🟢", text:"רוב החניה פנויה, קל למצוא מקום", group:"מורות"},
-  {emoji:"🟡", text:"נשארו מקומות בקומה 7 בלבד", group:"בוגרות מכללות"},
-  {emoji:"🔴", text:"אין חניה פנויה, חפשו חניה חיצונית", group:"משרד"}
+  {emoji:"🟢", text:"רוב החניה פנויה, קל למצוא מקום", group:"מורות - מגיעות מוקדם"},
+  {emoji:"🟡", text:"נשארו מקומות בקומה 7 בלבד", group:"בוגרות מכללות - מספיקות גם וגם"},
+  {emoji:"🔴", text:"אין חניה פנויה, חפשו חניה חיצונית", group:"ישר מהמשרד"}
 ];
 
 const parkingStatusDiv = document.getElementById("parkingStatus");
