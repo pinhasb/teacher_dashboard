@@ -2,72 +2,97 @@
 <html lang="he">
 <head>
 <meta charset="UTF-8">
-<title>דשבורד מצב האומה – פסח</title>  
+<title>דשבורד פסח חי – מצב האומה</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
 body{
-font-family:Arial;
-direction:rtl;
-background:linear-gradient(135deg,#eef2ff,#fdfdfd);
-margin:20px
+    font-family:Arial;
+    direction:rtl;
+    background:linear-gradient(135deg,#eef2ff,#fdfdfd);
+    margin:0;
+    padding:0;
 }
-
 h1{
-text-align:center;
-margin-bottom:5px
+    text-align:center;
+    margin:15px 0 5px 0;
 }
-
 .subtitle{
-text-align:center;
-margin-bottom:25px;
-color:#555
+    text-align:center;
+    margin-bottom:20px;
+    color:#555;
 }
 
+/* פס גלילה אופקי */
+#ticker{
+    background:#34495e;
+    color:white;
+    white-space:nowrap;
+    overflow:hidden;
+    padding:10px 0;
+    font-size:18px;
+}
+#ticker span{
+    display:inline-block;
+    padding-left:100%;
+    animation: scroll 20s linear infinite;
+}
+@keyframes scroll{
+    0%{transform:translateX(0%);}
+    100%{transform:translateX(-100%);}
+}
+
+/* גריד הדשבורד */
 #grid{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:22px
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:22px;
+    padding:20px;
 }
 
 .card{
-background:white;
-border-radius:12px;
-padding:16px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1)
+    background:white;
+    border-radius:12px;
+    padding:16px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 canvas{
-height:260px !important
+    height:260px !important;
 }
 
 .big{
-font-size:36px;
-text-align:center
+    font-size:36px;
+    text-align:center;
 }
 
 .status{
-text-align:center;
-margin-top:10px;
-font-size:20px
+    text-align:center;
+    margin-top:10px;
+    font-size:20px;
 }
 
 .timer{
-text-align:center;
-font-size:28px;
-margin-top:20px;
-color:#e74c3c
+    text-align:center;
+    font-size:28px;
+    margin-top:10px;
+    color:#e74c3c;
 }
-
 </style>
 </head>
 
 <body>
 
-<h1>📊 דשבורד מצב האומה – שבוע לפני פסח</h1>
-<div class="subtitle">נתונים מבוססי מחקר עומק, קבוצות וואטסאפ ושיטוט בקניונים</div>
+<h1>📊 דשבורד פסח חי – מצב האומה</h1>
+<div class="subtitle">נתונים חיים מבוססי וואטסאפ, קניונים וחוכמת המורות</div>
+
+<div id="ticker">
+  <span>
+    📰 כל המורות כבר בקניון – רואות החשבון עוד מנסות לסגור קפה רביעי – בדיחה פנימית: בוגרות מכללות עדיין מחפשות איקאה – ניקוי ארונות בתנופה – רק עוד פוסט על החופש – גננות חושבות: האם הקפה מספיק לעוד סבב משחקים? – עובדות משרד מנסות לזכור אם הדוח הסופי נשלח – סיכום חופשה: 30% קניות, 70% סיבות לחזור למשרד – נחשו מי שכח לשים מפיות בפסח – עכשיו גם מדד לחץ חי  
+    📰 כל המורות כבר בקניון – רואות החשבון עוד מנסות לסגור קפה רביעי – בדיחה פנימית: בוגרות מכללות עדיין מחפשות איקאה – ניקוי ארונות בתנופה – …
+  </span>
+</div>
 
 <div id="grid">
 
@@ -98,13 +123,13 @@ color:#e74c3c
 
 <div class="card">
 <h3>😱 מד לחץ בעבודה משרדית</h3>
-<div class="big">89%</div>
+<div class="big" id="stressLevel">89%</div>
 <div class="status">כי "רק שאלה קטנה באקסל"</div>
 </div>
 
 <div class="card">
 <h3>🚗 מצב חניה בקניון</h3>
-<div class="big">🔴</div>
+<div class="big" id="parkingStatus">🔴</div>
 <div class="status">נשאר רק קומה 7 ליד המזגנים</div>
 </div>
 
@@ -121,113 +146,92 @@ color:#e74c3c
 </div>
 
 <script>
-
-new Chart(cleanChart,{
-type:'bar',
-data:{
-labels:["ארונות","חלונות","מחסן","מצאתי מ-2009","מנוחה"],
-datasets:[
-{
-label:"עובדות הוראה",
-data:[85,73,64,91,15],
-backgroundColor:"#2ecc71"
-},
-{
-label:"עובדות משרד",
-data:[12,5,3,0,2],
-backgroundColor:"#9b59b6"
-}
-]
-}
-})
-
-new Chart(mallChart,{
-type:'pie',
-data:{
-labels:["מורות / גננות","סטודנטים","פנסיונרים","עובדים שברחו מוקדם"],
-datasets:[{
-data:[62,18,12,8],
-backgroundColor:["#1abc9c","#3498db","#f1c40f","#e74c3c"]
-}]
-}
-})
-
-new Chart(coffeeChart,{
-type:'bar',
-data:{
-labels:["הוראה בחופש","הוראה בשגרה","עובדת משרד","רואת חשבון בדוחות"],
-datasets:[{
-data:[1,4,7,12],
-backgroundColor:"#d35400"
-}]
-}
-})
-
-new Chart(shoppingChart,{
-type:'bar',
-data:{
-labels:["כלי מטבח","מפות","עציצים","דברים שלא ברור למה נקנו"],
-datasets:[
-{
-label:"הוראה",
-data:[14,6,5,9],
-backgroundColor:"#27ae60"
-},
-{
-label:"משרד",
-data:[2,1,0,0],
-backgroundColor:"#8e44ad"
-}
-]
-}
-})
-
-new Chart(thoughtChart,{
-type:'bar',
-data:{
-labels:[
-"נספיק גם איקאה",
-"איך רק 11:40",
-"אולי קניון",
-"עוד ישיבה"
-],
-datasets:[{
-data:[90,85,60,70],
-backgroundColor:["#2ecc71","#9b59b6","#3498db","#e67e22"]
-}]
-}
-})
-
-new Chart(collegeChart,{
-type:'doughnut',
-data:{
-labels:[
-"בקניון",
-"בבית קפה",
-"מעלות פוסט 'איזה חופש מגיע לנו'",
-"מזכירות שיש גם ישיבות פדגוגיות"
-],
-datasets:[{
-data:[40,30,20,10],
-backgroundColor:[
-"#e67e22",
-"#f1c40f",
-"#9b59b6",
-"#95a5a6"
-]
-}]
-}
-})
-
+// --- פונקציית טיימר חופשה ---
 function updateTimer(){
-let end=new Date("2026-04-12")
-let now=new Date()
-let diff=end-now
-let days=Math.floor(diff/1000/60/60/24)
-document.getElementById("timer").innerText=days+" ימים"
+    let end=new Date("2026-04-12");
+    let now=new Date();
+    let diff=end-now;
+    let days=Math.floor(diff/1000/60/60/24);
+    document.getElementById("timer").innerText=days+" ימים";
+}
+updateTimer();
+
+// --- יצירת גרפים עם Chart.js ---
+const cleanChart = new Chart(document.getElementById('cleanChart'),{
+    type:'bar',
+    data:{
+        labels:["ארונות","חלונות","מחסן","מצאתי מ-2009","מנוחה"],
+        datasets:[
+            {label:"עובדות הוראה", data:[85,73,64,91,15], backgroundColor:"#2ecc71"},
+            {label:"עובדות משרד", data:[12,5,3,0,2], backgroundColor:"#9b59b6"}
+        ]
+    }
+});
+
+const mallChart = new Chart(document.getElementById('mallChart'),{
+    type:'pie',
+    data:{
+        labels:["מורות / גננות","סטודנטים","פנסיונרים","עובדים שברחו מוקדם"],
+        datasets:[{data:[62,18,12,8], backgroundColor:["#1abc9c","#3498db","#f1c40f","#e74c3c"]}]
+    }
+});
+
+const coffeeChart = new Chart(document.getElementById('coffeeChart'),{
+    type:'bar',
+    data:{
+        labels:["הוראה בחופש","הוראה בשגרה","עובדת משרד","רואת חשבון בדוחות"],
+        datasets:[{data:[1,4,7,12], backgroundColor:"#d35400"}]
+    }
+});
+
+const shoppingChart = new Chart(document.getElementById('shoppingChart'),{
+    type:'bar',
+    data:{
+        labels:["כלי מטבח","מפות","עציצים","דברים שלא ברור למה נקנו"],
+        datasets:[
+            {label:"הוראה", data:[14,6,5,9], backgroundColor:"#27ae60"},
+            {label:"משרד", data:[2,1,0,0], backgroundColor:"#8e44ad"}
+        ]
+    }
+});
+
+const thoughtChart = new Chart(document.getElementById('thoughtChart'),{
+    type:'bar',
+    data:{
+        labels:["נספיק גם איקאה","איך רק 11:40","אולי קניון","עוד ישיבה"],
+        datasets:[{data:[90,85,60,70], backgroundColor:["#2ecc71","#9b59b6","#3498db","#e67e22"]}]
+    }
+});
+
+const collegeChart = new Chart(document.getElementById('collegeChart'),{
+    type:'doughnut',
+    data:{
+        labels:["בקניון","בית קפה","פוסט חופש","ישיבות פדגוגיות"],
+        datasets:[{data:[40,30,20,10], backgroundColor:["#e67e22","#f1c40f","#9b59b6","#95a5a6"]}]
+    }
+});
+
+// --- פונקציה ליצירת נתונים אקראיים לגרפים חיים ---
+function randomizeCharts(){
+    cleanChart.data.datasets[0].data = cleanChart.data.datasets[0].data.map(v => Math.min(100, Math.max(0,v + (Math.random()*10-5))));
+    cleanChart.data.datasets[1].data = cleanChart.data.datasets[1].data.map(v => Math.min(50, Math.max(0,v + (Math.random()*3-1.5))));
+    cleanChart.update();
+
+    coffeeChart.data.datasets[0].data = coffeeChart.data.datasets[0].data.map(v => Math.min(15, Math.max(0,v + Math.floor(Math.random()*3-1))));
+    coffeeChart.update();
+
+    shoppingChart.data.datasets[0].data = shoppingChart.data.datasets[0].data.map(v => Math.min(20, Math.max(0,v + Math.floor(Math.random()*2-1))));
+    shoppingChart.data.datasets[1].data = shoppingChart.data.datasets[1].data.map(v => Math.min(5, Math.max(0,v + Math.floor(Math.random()*1-0.5))));
+    shoppingChart.update();
+
+    // עדכון מד לחץ ועומס חניה
+    document.getElementById("stressLevel").innerText = Math.floor(Math.random()*30+70) + "%";
+    const parkingIcons = ["🟢","🟡","🔴"];
+    document.getElementById("parkingStatus").innerText = parkingIcons[Math.floor(Math.random()*3)];
 }
 
-updateTimer()
+// --- הרצת האנימציה כל 3 שניות ---
+setInterval(randomizeCharts,3000);
 
 </script>
 
