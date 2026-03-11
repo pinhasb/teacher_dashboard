@@ -2,17 +2,7 @@
 <html lang="he">
 <head>
 <meta charset="UTF-8">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2DJ3E2WM8G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2DJ3E2WM8G');
-</script>
-<title> פסח חי </title>
-
+<title> שאגת ארי - פסח </title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -33,7 +23,7 @@ h1{
     color:#555;
 }
 
-/* פס גלילה אופקי */
+/* פס גלילה אופקי אינסופי */
 #ticker{
     background:#34495e;
     color:white;
@@ -45,11 +35,11 @@ h1{
 #ticker span{
     display:inline-block;
     padding-left:100%;
-    animation: scroll 60s linear infinite;
+    animation: scroll 120s linear infinite;
 }
 @keyframes scroll{
-    0%{transform:translateX(0%);}
-    100%{transform:translateX(-100%);}
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 /* גריד הדשבורד */
@@ -93,13 +83,13 @@ canvas{
 
 <body>
 
-<h1>📊  פסח חי</h1>
+<h1>📊 שאגת ארי - פסח </h1>
 <div class="subtitle">נתונים חיים מבוססי וואטסאפ, קניונים וחוכמת המורות</div>
 
 <div id="ticker">
   <span>
-    📰 כל המורות כבר בקניון – רואות החשבון עוד מנסות לסגור קפה רביעי – בדיחה פנימית: בוגרות מכללות עדיין מחפשות איקאה – ניקוי ארונות בתנופה – רק עוד פוסט על החופש – גננות חושבות: האם הקפה מספיק לעוד סבב משחקים? – עובדות משרד מנסות לזכור אם הדוח הסופי נשלח – סיכום חופשה: 30% קניות, 70% סיבות לחזור למשרד – נחשו מי שכח לשים מפיות בפסח – עכשיו גם מדד לחץ חי  
-    📰 כל המורות כבר בקניון – רואות החשבון עוד מנסות לסגור קפה רביעי – בוגרות מכללות עדיין מחפשות איקאה – ניקוי ארונות בתנופה – …
+📰 כל המורות כבר בקניון – רואות החשבון עוד מנסות לסגור קפה רביעי – בדיחה פנימית: בוגרות מכללות עדיין מחפשות איקאה – ניקוי ארונות בתנופה – רק עוד פוסט על החופש – גננות חושבות: האם הקפה מספיק לעוד סבב משחקים? – עובדות משרד מנסות לזכור אם הדוח הסופי נשלח – סיכום חופשה: 30% קניות, 70% סיבות לחזור למשרד – נחשו מי שכח לשים מפיות בפסח – עכשיו גם מדד לחץ חי
+📰 כל המורות כבר בקניון – רואות החשבון עוד מנסות לסגור קפה רביעי –  בוגרות מכללות עדיין מחפשות איקאה – ניקוי ארונות בתנופה
   </span>
 </div>
 
@@ -132,14 +122,14 @@ canvas{
 
 <div class="card">
 <h3>😱 מד לחץ בעבודה משרדית</h3>
-<div class="big" id="stressLevel">89%</div>
-<div class="status">כי "רק שאלה קטנה באקסל"</div>
+<div class="big" id="stressLevel">76%</div>
+<div class="status" id="stressReason">כי "רק שאלה קטנה באקסל"</div>
 </div>
 
 <div class="card">
 <h3>🚗 מצב חניה בקניון</h3>
-<div class="big" id="parkingStatus">🔴</div>
-<div class="status">נשאר רק קומה 7 ליד המזגנים</div>
+<div class="big" id="parkingStatus">🟡</div>
+<div class="status" id="parkingText">נשאר רק קומה 7 ליד המזגנים (מורות)</div>
 </div>
 
 <div class="card">
@@ -155,7 +145,7 @@ canvas{
 </div>
 
 <script>
-// --- פונקציית טיימר חופשה ---
+// --- טיימר חופשה ---
 function updateTimer(){
     let end=new Date("2026-04-12");
     let now=new Date();
@@ -165,7 +155,7 @@ function updateTimer(){
 }
 updateTimer();
 
-// --- יצירת גרפים עם Chart.js ---
+// --- גרפים ---
 const cleanChart = new Chart(document.getElementById('cleanChart'),{
     type:'bar',
     data:{
@@ -220,27 +210,75 @@ const collegeChart = new Chart(document.getElementById('collegeChart'),{
     }
 });
 
-// --- פונקציה ליצירת נתונים אקראיים לגרפים חיים ---
-function randomizeCharts(){
-    cleanChart.data.datasets[0].data = cleanChart.data.datasets[0].data.map(v => Math.min(100, Math.max(0,v + (Math.random()*10-5))));
-    cleanChart.data.datasets[1].data = cleanChart.data.datasets[1].data.map(v => Math.min(50, Math.max(0,v + (Math.random()*3-1.5))));
-    cleanChart.update();
+// --- מד לחץ בעבודה משרדית עם סיבות ---
+const stressReasons = [
+  'כי "רק שאלה קטנה באקסל"',
+  'כי מישהו שלח אימייל נוסף על הדוח',
+  'כי השעון כבר 16:45 והעבודה עוד לא גמורה',
+  'כי המחשב שוב התרסק',
+  'כי נזכרו פתאום בישיבת עדכון חירום'
+];
 
-    coffeeChart.data.datasets[0].data = coffeeChart.data.datasets[0].data.map(v => Math.min(15, Math.max(0,v + Math.floor(Math.random()*3-1))));
-    coffeeChart.update();
+// --- חניה עם קבוצות + אנימציה חלקה ---
+const parkingStates = [
+  {emoji:"🟢", text:"רוב החניה פנויה, קל למצוא מקום", group:"מורות"},
+  {emoji:"🟡", text:"נשארו מקומות בקומה 7 בלבד", group:"בוגרות מכללות"},
+  {emoji:"🔴", text:"אין חניה פנויה, חפשו חניה חיצונית", group:"משרד"}
+];
 
-    shoppingChart.data.datasets[0].data = shoppingChart.data.datasets[0].data.map(v => Math.min(20, Math.max(0,v + Math.floor(Math.random()*2-1))));
-    shoppingChart.data.datasets[1].data = shoppingChart.data.datasets[1].data.map(v => Math.min(5, Math.max(0,v + Math.floor(Math.random()*1-0.5))));
-    shoppingChart.update();
+const parkingStatusDiv = document.getElementById("parkingStatus");
+const parkingTextDiv = document.getElementById("parkingText");
+let currentParkingIndex = 0;
 
-    // עדכון מד לחץ ועומס חניה
-    document.getElementById("stressLevel").innerText = Math.floor(Math.random()*30+70) + "%";
-    const parkingIcons = ["🟢","🟡","🔴"];
-    document.getElementById("parkingStatus").innerText = parkingIcons[Math.floor(Math.random()*3)];
+function updateParkingSmooth(){
+  const nextIndex = Math.floor(Math.random() * parkingStates.length);
+  const state = parkingStates[nextIndex];
+
+  parkingStatusDiv.style.transition = "opacity 0.5s";
+  parkingTextDiv.style.transition = "opacity 0.5s";
+
+  parkingStatusDiv.style.opacity = 0;
+  parkingTextDiv.style.opacity = 0;
+
+  setTimeout(()=>{
+    parkingStatusDiv.innerText = state.emoji;
+    parkingTextDiv.innerText = state.text + " (" + state.group + ")";
+    parkingStatusDiv.style.opacity = 1;
+    parkingTextDiv.style.opacity = 1;
+  },500);
+
+  currentParkingIndex = nextIndex;
 }
 
-// --- הרצת האנימציה כל 3 שניות ---
-setInterval(randomizeCharts,3000);
+// --- עדכון כל הדשבורד ---
+function updateDashboard(){
+  // מד לחץ
+  const stress = Math.floor(Math.random()*30 + 70); // 70-100%
+  const reason = stressReasons[Math.floor(Math.random()*stressReasons.length)];
+  document.getElementById("stressLevel").innerText = stress + "%";
+  document.getElementById("stressReason").innerText = reason;
+
+  // חניה חלקה
+  updateParkingSmooth();
+
+  // גרפים חיים
+  cleanChart.data.datasets[0].data = cleanChart.data.datasets[0].data.map(v => Math.min(100, Math.max(0,v + (Math.random()*10-5))));
+  cleanChart.data.datasets[1].data = cleanChart.data.datasets[1].data.map(v => Math.min(50, Math.max(0,v + (Math.random()*3-1.5))));
+  cleanChart.update();
+
+  coffeeChart.data.datasets[0].data = coffeeChart.data.datasets[0].data.map(v => Math.min(15, Math.max(0,v + Math.floor(Math.random()*3-1))));
+  coffeeChart.update();
+
+  shoppingChart.data.datasets[0].data = shoppingChart.data.datasets[0].data.map(v => Math.min(20, Math.max(0,v + Math.floor(Math.random()*2-1))));
+  shoppingChart.data.datasets[1].data = shoppingChart.data.datasets[1].data.map(v => Math.min(5, Math.max(0,v + Math.floor(Math.random()*1-0.5))));
+  shoppingChart.update();
+
+  thoughtChart.data.datasets[0].data = thoughtChart.data.datasets[0].data.map(v => Math.min(100, Math.max(0,v + Math.floor(Math.random()*5-2))));
+  thoughtChart.update();
+}
+
+// --- הרצה כל 3 שניות ---
+setInterval(updateDashboard, 3000);
 
 </script>
 
